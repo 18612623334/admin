@@ -1,9 +1,9 @@
 laravel5.5 laravel_admin
 ### 通过Composer安装包。
 
-#### 从终端运行Composer require命令：
+#### 从终端运行Composer update命令：
 ```
-composer require wangliang/laravel-admin:^v1.0
+"wangliang/laravel-admin":"^v1.2",
 ```
 #### 在config/app    providers数组中添加一个新行：
 ```
