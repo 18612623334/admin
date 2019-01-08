@@ -1,8 +1,62 @@
-laravel5.5 Component_login
+laravel5.5 laravel_admin
 ### 通过Composer安装包。
 
-##### 配置后台Auth:
-将配置文件 config/auth.php 
+####从终端运行Composer require命令：
+```
+composer require wangliang/laravel-admin:^v1.0
+```
+#### 在config/app    providers数组中添加一个新行：
+```
+Wangliang\Test\TestServiceProvider::class
+```
+#### 从终端运行发布服务 命令：
+```
+php artisan vendor:publish --  
+```
+#### 运行数据库迁移 (先删除框架自带的user数据迁移文件)(关掉laravel config/database 下的mysql 严格模式 strict:false)
+```
+php artisan migrate
+```
+####在 app/RouteServiceProvider 修改路由
+##### 新增方法
+```
+protected function mapAdminRoutes()
+{
+    foreach (glob(base_path('routes/Admin') . '/*.php') as $file) {
+        Route::middleware('admin')
+            ->namespace($this->namespace)
+            ->group($file);
+    }
+}
+```
+##### map方法添加
+```
+$this->mapAdminRoutes();
+```
+#### 修改app/Http/Kernel.php
+```
+middlewareGroups 数组中 web替换成admin
+```
+#### 在app/Providers/AppServiceProvider.php 
+```
+引入
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Schema;
+boot方法中添加
+View::composer(
+    '*', 'App\Http\ViewComposers\ShareComposer'
+);
+```
+#### 在app/Http/Kernel.php 路由中间件添加
+```
+'CheckLogin'=>\App\Http\Middleware\CheckLogin::class,
+```
+#### 配置后台登录图片验证码：
+```
+"mews/captcha": "^2.2",(这个百度一下  都有)
+```
+#### 配置后台Auth:
+##### 将配置文件 config/auth.php 
 ```
 guards：新增
 'admin' => [
@@ -15,7 +69,7 @@ guards：新增
      'model' => App\Models\Admin\Admin::class,
  ],
  ```
- 运行数据填充：
+ #### 运行数据填充：
  ```
  php artisan db:seed --class=AdminTableSeeder
  ```

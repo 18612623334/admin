@@ -62,7 +62,12 @@ class TestServiceProvider extends ServiceProvider
 
         //样式文件
         $this->publishes([
-            realpath(__DIR__ . '/Admin/style') => base_path('public/style'),
+            realpath(__DIR__ . '/Admin/style') => public_path('style'),
+        ]);
+          
+        //路由中间件
+        $this->publishes([
+            __DIR__.'/Admin/CheckLogin.php' => app_path('Http/Middleware/CheckLogin.php'),
         ]);
     }
 
