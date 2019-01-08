@@ -1,7 +1,7 @@
 laravel5.5 laravel_admin
 ### 通过Composer安装包。
 
-####从终端运行Composer require命令：
+#### 从终端运行Composer require命令：
 ```
 composer require wangliang/laravel-admin:^v1.0
 ```
@@ -17,7 +17,7 @@ php artisan vendor:publish --
 ```
 php artisan migrate
 ```
-####在 app/RouteServiceProvider 修改路由
+#### 在 app/RouteServiceProvider 修改路由
 ##### 新增方法
 ```
 protected function mapAdminRoutes()
@@ -54,6 +54,18 @@ View::composer(
 #### 配置后台登录图片验证码：
 ```
 "mews/captcha": "^2.2",(这个百度一下  都有)
+```
+#### 注册providers（config/app.php）,在这个数组中的最后追加如下代码：
+```
+Mews\Captcha\CaptchaServiceProvider::class,
+```
+#### 注册aliases （config/app.php），在这个数组中的最后追加如下代码：
+```
+'Captcha' => Mews\Captcha\Facades\Captcha::class,
+```
+#### 从终端运行发布服务 命令：
+```
+php artisan vendor:publish
 ```
 #### 配置后台Auth:
 ##### 将配置文件 config/auth.php 
