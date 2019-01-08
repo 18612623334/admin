@@ -14,10 +14,11 @@ Wangliang\Test\TestServiceProvider::class
 php artisan vendor:publish --  
 ```
 #### 运行数据库迁移 (先删除框架自带的user数据迁移文件)(关掉laravel config/database 下的mysql 严格模式 strict:false)
+#### 先修改 .env 数据库连接
 ```
 php artisan migrate
 ```
-#### 在 app/RouteServiceProvider 修改路由
+#### 在 app/Providers/RouteServiceProvider 修改路由
 ##### 新增方法
 ```
 protected function mapAdminRoutes()
@@ -67,6 +68,11 @@ Mews\Captcha\CaptchaServiceProvider::class,
 ```
 php artisan vendor:publish
 ```
+#### 因为Captcha 安装完后  默认的路由中间件是"web"需要换成"admin"
+```
+vendor\mews\captcha\src\CaptchaServiceProvider.php
+```
+
 #### 配置后台Auth:
 ##### 将配置文件 config/auth.php 
 ```
