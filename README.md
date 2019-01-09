@@ -91,5 +91,9 @@ guards：新增
  ```
  php artisan db:seed --class=AdminTableSeeder
  ```
+
+### 还有最重要的一步   
+#### app/Providers/RouteServiceProvider 注释掉 WEB 路由
+
 后台账号密码：账号（admin）密码（123456）
 OK 按照步骤走下来  项目已经基本上跑通  如果跑不通  去百度上  好好学习一下
