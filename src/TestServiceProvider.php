@@ -36,9 +36,11 @@ class TestServiceProvider extends ServiceProvider
         ]);
 
         //配置文件
-        $this->publishes([
-            __DIR__.'/config/constants.php' => config_path('constants.php'),
-        ]);
+        if(file_exists(config_path('constants.php'))==false){
+            $this->publishes([
+                __DIR__.'/config/constants.php' => config_path('constants.php'),
+            ]);
+        }
 
         //迁移文件
         $this->publishes([
