@@ -3,11 +3,11 @@ laravel5.5 laravel_admin
 
 #### 从终端运行Composer update命令：
 ```
-"wangliang/laravel-admin":"^v1.2",
+"wangliang/laravel-admin":"^v1.3",
 ```
 #### 在config/app    providers数组中添加一个新行：
 ```
-Wangliang\Test\TestServiceProvider::class
+Wangliang\Admin\TestServiceProvider::class
 ```
 #### 从终端运行发布服务 命令：
 ```

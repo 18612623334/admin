@@ -1,6 +1,6 @@
 <?php
 
-namespace Wangliang\Test;
+namespace Wangliang\Admin;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -78,8 +78,8 @@ class TestServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('test', function ($app) {
-            return new test();
+        $this->app->singleton('admin', function ($app) {
+            return new admin();
         });
     }
 }
