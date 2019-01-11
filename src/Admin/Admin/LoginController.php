@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Admin\Admin;
-use App\Models\Admin\Rule;
+use App\Models\Admin\AdminRule;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Http\Request;
 use App\Http\Requests\Admin\LoginRequest;
@@ -22,19 +22,19 @@ class LoginController extends BaseController
 
         return view("Admin.Login.login");
     }
-    
+
     //登录
     public function login(LoginRequest $request)
     {
         $data = $request->only(['account', 'password']);
 
-        $user = Admin::getAdminFromAccount($data['account']);
+        $user = Admin::where('account', $data['account'])->first();
 
         if (Auth::guard('admin')->attempt($data)) {
 
-            session(['id' => $user['id'], 'username' => $user['username']]);
+            session(['id' => $user->id, 'username' => $user->username]);
 
-            $this->urlGroup($user['id']);
+            $this->urlGroup($user->id);
 
             return response(['status' => 1, '登陆成功']);
         } else {
@@ -45,9 +45,12 @@ class LoginController extends BaseController
     //获取用户组的导航
     public function urlGroup($user_id)
     {
-        $admin_group = Admin::AdminUserGroupLis($user_id);
+        $admin_group = Admin::AdminUserGroupList($user_id);
 
-        $rule_all = Rule::AdminRuleRoute();
+        $rule_all = AdminRule::with('adminNaviagtion')->get()->toArray();
+        foreach ($rule_all as $key => $value) {
+            $rule_all[$key]['navigation_name'] = $value['admin_naviagtion']['navigation_name'];
+        }
 
         $super_aid = Config::get('constants.SUPER_ADMIN_ID');
         $is_super_user = 0;
@@ -58,14 +61,14 @@ class LoginController extends BaseController
         $admin_array_rule = [];
         if ($is_super_user == '1') {
             foreach ($rule_all as $k => $v) {
-                $url='http://'.$_SERVER['HTTP_HOST'].'/'.$v['url'];
-                $array=get_headers($url,1);
-                if(!isset($array['1'])){
+                $url = 'http://' . $_SERVER['HTTP_HOST'] . '/' . $v['url'];
+                $array = get_headers($url, 1);
+                if (!isset($array['1'])) {
                     $v['status'] = 0;
-                }else{
+                } else {
                     $v['status'] = 1;
                 }
-                $v['http'] = 'http://'.$_SERVER['HTTP_HOST'].'/';
+                $v['http'] = 'http://' . $_SERVER['HTTP_HOST'] . '/';
                 $v['url'] = str_replace('/', '.', $v['url']);
                 $admin_array_rule[$v['navigation_name']][] = $v;
             }
@@ -73,16 +76,23 @@ class LoginController extends BaseController
             foreach ($admin_group as $key => $value) {
                 foreach ($rule_all as $k => $v) {
                     if ($value['naviagtion_id'] == $v['naviagtion_id'] && $value['id'] == $v['id']) {
+                        $url = 'http://' . $_SERVER['HTTP_HOST'] . '/' . $v['url'];
+                        $array = get_headers($url, 1);
+                        if (!isset($array['1'])) {
+                            $v['status'] = 0;
+                        } else {
+                            $v['status'] = 1;
+                        }
+                        $v['http'] = 'http://' . $_SERVER['HTTP_HOST'] . '/';
                         $v['url'] = str_replace('/', '.', $v['url']);
                         $admin_array_rule[$v['navigation_name']][] = $v;
                     }
                 }
             }
         }
-
         session(['navigation' => $admin_array_rule]);
     }
-    
+
     //退出
     public function loginout()
     {

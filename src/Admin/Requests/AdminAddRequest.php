@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginRequest extends FormRequest
+class AdminAddRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,30 +24,26 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
+            'admin_name' => ['required'],
             'account' => ['required', 'regex:/^[a-z\d]*$/i'],
-            'password' => ['required', 'between:6,15', 'regex:/^([A-Z]|[a-z]|[0-9]|[_.]){6,15}$/'],
-            'captcha' => ['required','captcha'],
+            'password' => ['required', 'between:6,15', 'regex:/^([A-Z]|[a-z]|[0-9]|[_.]){6,15}$/', 'confirmed'],
+            'password_confirmation' => ['required'],
+            'group_id' => ['required'],
         ];
     }
 
     public function messages()
     {
         return [
-            'account.required' => '请输入用户名',
+            'admin_name.required' => '请输入管理员名称',
+            'account.required' => '请输入管理员账号',
             'account.regex' => '不允许输入特殊字符',
-            'password.required' => '请输入密码',
+            'password.required' => '请输入管理员密码',
             'password.between' => '请输入6~15位密码',
             'password.regex' => '只允许数字、字母、下划线',
-            'captcha.required' => '请输入图片验证码',
-            'captcha.captcha' => '请输入正确的图片验证码',
-        ];
-    }
-
-    public function attributes()
-    {
-        return [
-            'account' => '账号',
-            'captcha' => '图片验证码',
+            'password_confirmation.required' => '请输入确认密码',
+            'password.confirmed' => '两次输入密码不一致',
+            'group_id.required' => '请选择管理员类型',
         ];
     }
 }

@@ -26,14 +26,14 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">路由名称</label>
                             <div class="col-sm-10">
-                                <input type="text" name="name" value="{{$info['rname']}}" class="form-control">
+                                <input type="text" name="name" value="{{$info['name']}}" class="form-control">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">路由地址</label>
                             <div class="col-sm-10">
-                                <input type="text" name="url" value="{{$info['rurl']}}" class="form-control">
+                                <input type="text" name="url" value="{{$info['url']}}" class="form-control">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
@@ -47,7 +47,7 @@
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">是否显示导航</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-10" style="padding-top: 5px;">
                                 <input type="radio" name="status" value="1" @if($info['status'] == 1) checked @endif/>
                                 <span>显示</span>&nbsp;&nbsp;&nbsp;
                                 <input type="radio" name="status" value="0" @if($info['status'] == 0) checked @endif/>
@@ -58,7 +58,7 @@
 
                         <div class="form-group">
                             <div class="col-sm-4 col-sm-offset-2">
-                                <input type="hidden" name="id" value="{{$info['rid']}}">
+                                <input type="hidden" name="id" value="{{$info['id']}}">
                                 <input type="hidden" name="naviagtion_id" value="{{$naviagtion_id}}">
                                 <button class="btn btn-primary" type="submit">保存内容</button>
                                 <button class="btn btn-white" type="submit">取消</button>
@@ -118,7 +118,14 @@
                 } else {
                     layer.msg(msg.msg);
                 }
-            }
+            },
+            error : function (msg ) {
+                var json=JSON.parse(msg.responseText);
+                $.each(json.errors, function(idx, obj) {
+                    layer.msg(obj[0]);
+                    return false;
+                });
+            },
         }, "json");
     });
 

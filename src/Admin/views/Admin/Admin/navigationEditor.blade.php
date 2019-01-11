@@ -33,7 +33,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">导航排序</label>
                             <div class="col-sm-10">
-                                <input type="number" name="sort" placeholder="请输入排序" class="form-control" value="{{$admin_data['navigation_sort']}}">
+                                <input type="number" name="sort" placeholder="0" class="form-control" value="{{$admin_data['navigation_sort']}}">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
@@ -77,7 +77,7 @@
 
         postMsg.navigation_name = $('input[name=navigation_name]').val();
         postMsg.id = $('input[name=id]').val();
-        postMsg.sort = $("input[name=sort]").val();
+        postMsg.navigation_sort = $("input[name=sort]").val();
 
         $.ajax({
             type: "POST",

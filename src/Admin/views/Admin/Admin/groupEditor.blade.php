@@ -38,7 +38,7 @@
 
                         <div class="form-group">
                             <div class="col-sm-4 col-sm-offset-2">
-                                <input type="hidden" name="group_id" value="{{$group_info['gid']}}">
+                                <input type="hidden" name="group_id" value="{{$group_info['id']}}">
                                 <button class="btn btn-primary" type="submit">保存内容</button>
                                 <button class="btn btn-white" type="submit">取消</button>
                             </div>
@@ -93,7 +93,14 @@
                 } else {
                     layer.msg(msg.msg);
                 }
-            }
+            },
+            error : function (msg ) {
+                var json=JSON.parse(msg.responseText);
+                $.each(json.errors, function(idx, obj) {
+                    layer.msg(obj[0]);
+                    return false;
+                });
+            },
         }, "json");
     });
 

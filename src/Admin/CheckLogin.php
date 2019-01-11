@@ -21,44 +21,23 @@ class CheckLogin{
         $path = $request->path();
 
         if(!($id) || !$username){
-
             if(!($path=="login"||$path=="login/index"||$path=="login/login"||$path=="/")){
-
                 return redirect()->route('login.index');
-
             }
-
         }
 
         if ($id && $username) {
-
             $result = AuthAdmin::checkAdminRule($id,$path);
 
             if (!$result) {
-
                 if ($request->ajax()) {
                     $res = array('status' => 0, 'msg' => '权限不够');
-
                     return response()->json($res);
-
                 } else {
                     return response()->view('Admin.Index.authError');
-
                 }
-
             }
-
         }
-
         return  $next($request);
-
     }
-
-
-//	public function terminate($request, $response)
-//	{
-//		// TODO: Implement terminate() method.
-//
-//	}
-
 }

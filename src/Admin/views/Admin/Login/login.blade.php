@@ -108,6 +108,7 @@
         var password = $("input[name=password]").val();
         var captcha = $("input[name=captcha]").val();
 
+        var index = layer.load(2);
 
         $.ajax({
             type: "POST",
@@ -122,6 +123,7 @@
             },
             dataType: "json",
             success: function (msg) {
+                layer.close(index);
                 canLogin = 1;
                 if (msg.status=="1") {
                     location.href = "{{ URL::route('index.index') }}";
@@ -130,6 +132,7 @@
                 }
             },
             error : function (msg ) {
+                layer.close(index);
                 getPic();
                 var json=JSON.parse(msg.responseText);
                 if(json.errors.captcha[0]=='validation.captcha'){

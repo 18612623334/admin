@@ -60,8 +60,9 @@
                                 <td>{{$value['navigation_sort']}}</td>
                                 <td>{{$value['created_at']}}</td>
                                 <td class="center">
+                                    <a target="_self" href="{{URL::route('admin.route-list',['id'=>$value['id']])}}">添加子路由</a> |
                                     <a target="_self" href="{{URL::route('admin.navigation-editor',['id'=>$value['id']])}}">编辑</a> |
-                                    <a target="_self" href="{{URL::route('admin.route-list',['id'=>$value['id']])}}">查看</a>
+                                    <a target="_self" class="change_status" data-href="{{URL::route('admin.route-del',['id'=>$value['id']])}}">删除</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -89,7 +90,7 @@
         $('.change_status').click(function(){
             var tdEle = $(this);
             var url = tdEle.data("href");
-            layer.confirm('您确定要改变荣誉状态吗？', {
+            layer.confirm('您确定要删除吗？', {
                 btn: ['确定','取消']
             }, function(){
                 $.get(url,"",function(data){

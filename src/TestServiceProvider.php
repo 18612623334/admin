@@ -70,12 +70,7 @@ class TestServiceProvider extends ServiceProvider
         //路由中间件
         $this->publishes([
             __DIR__.'/Admin/CheckLogin.php' => app_path('Http/Middleware/CheckLogin.php'),
-        ]);
-
-        //404 页面
-        $this->publishes([
-            __DIR__.'/Admin/404.blade.php' => base_path('resources/views/404.blade.php'),
-        ]);       
+        ]);     
     }
 
     /**

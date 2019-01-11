@@ -14,7 +14,7 @@ class CreateAdminGroupTable extends Migration
     public function up()
     {
         Schema::create('admin_group', function (Blueprint $table) {
-            $table->increments('gid');
+            $table->increments('id');
             $table->string('group_name', 32)->default('')->comment('分组名');
             $table->timestamps();
         });

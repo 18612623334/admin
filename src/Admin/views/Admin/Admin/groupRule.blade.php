@@ -31,7 +31,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">用户组名称</label>
                             <div class="col-sm-10">
-                                <input type="text" name="group_name" value="{{$group_name['group_name']}}" class="form-control">
+                                <input type="text" name="group_name" readonly value="{{$group_name['group_name']}}" class="form-control">
                             </div>
                         </div>
 
@@ -40,7 +40,7 @@
                             <label class="col-sm-2 control-label">权限管理</label>
                             <div class="col-sm-10">
                                 @foreach($array_route as $value)
-                                    <div style="">{{$value[0]['navigation_name']}}：</div>
+                                    <div style="">{{$value[0]['admin_naviagtion']['navigation_name']}}：</div>
                                     <div>
                                         @foreach($value as $v)
                                             <label class="checkbox-inline">
@@ -59,7 +59,7 @@
 
                         <div class="form-group">
                             <div class="col-sm-4 col-sm-offset-2">
-                                <input type="hidden" name="group_id" value="{{$group_name['gid']}}">
+                                <input type="hidden" name="group_id" value="{{$group_name['id']}}">
                                 <button class="btn btn-primary" type="submit">保存内容</button>
                                 <button class="btn btn-white" type="submit">取消</button>
                             </div>
@@ -100,7 +100,7 @@
         var group_rule = '';
 
         $.each($('input:checkbox:checked'),function(){
-            group_rule += $(this).val()+"$$$";
+            group_rule += $(this).val()+",";
 
         });
         postMsg.group_rule = group_rule;
@@ -122,7 +122,14 @@
                 } else {
                     layer.msg(msg.msg);
                 }
-            }
+            },
+            error : function (msg ) {
+                var json=JSON.parse(msg.responseText);
+                $.each(json.errors, function(idx, obj) {
+                    layer.msg(obj[0]);
+                    return false;
+                });
+            },
         }, "json");
     });
 

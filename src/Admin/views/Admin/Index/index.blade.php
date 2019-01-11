@@ -36,11 +36,7 @@
                             @foreach($value as $k => $v)
                                 @if($v['status']==0)
                                 <li>
-                                    @if($v['parameter'])
-                                        <a class="J_menuItem" href="{{ URL::route($v['url'],$v['parameter']) }}">{{$v['name']}}</a>
-                                    @else
-                                        <a class="J_menuItem" href="{{URL::route('admin.rule-error')}}">{{$v['name']}}</a>
-                                    @endif
+                                    <a class="J_menuItem" href="{{URL::route('admin.rule-error')}}">{{$v['name']}}</a>
                                 </li>
                                 @elseif($v['status']==1)
                                 <li>

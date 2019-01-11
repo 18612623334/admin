@@ -3,7 +3,7 @@ laravel5.5 laravel_admin
 
 #### 从终端运行Composer update命令：
 ```
-"wangliang/laravel-admin":"^v1.3",
+"wangliang/laravel-admin":"^v1.4",
 ```
 #### 在config/app    providers数组中添加一个新行：
 ```

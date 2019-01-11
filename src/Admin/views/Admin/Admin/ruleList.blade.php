@@ -78,28 +78,6 @@
 <script src="{{asset('style/js/content.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('style/layer/layer.js')}}"></script>
 
-<script>
-    $(function(){
-        $('.change_status').click(function(){
-            var tdEle = $(this);
-            var url = tdEle.data("href");
-            layer.confirm('您确定要改变荣誉状态吗？', {
-                btn: ['确定','取消']
-            }, function(){
-                $.get(url,"",function(data){
-                    if(data.status == 1){
-                        layer.msg(data.msg,{time:1500},function(){
-                            window.location.href = "";
-                        });
-                    }else{
-                        layer.msg(data.msg,{time:3000},function(){
-                        });
-                    }
-                });
-            });
-        });
-    });
-</script>
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
 </body>
 </html>
